@@ -7,16 +7,22 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources/*.py*') 
             }
         }
+        stage('Install Pytest') {
+            steps {
+                // Installing pytest using pip
+                sh 'pip install pytest'
+            }
+        }
         stage('Test') {
             steps {
-                sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+                // Running the tests using pytest
+                sh 'pytest --junit-xml test-reports/results.xml sources/test_calc.py'
             }
             post {
                 always {
                     junit 'test-reports/results.xml'
                 }
-          }
+            }
         }
-
     }
 }
