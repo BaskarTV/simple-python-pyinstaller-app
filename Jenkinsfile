@@ -7,12 +7,6 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources/*.py*') 
             }
         }
-        stage('Install Pytest') {
-            steps {
-                // Installing pytest using pip
-                sh 'pip install pytest'
-            }
-        }
         stage('Test') {
             steps {
                 // Running the tests using pytest
