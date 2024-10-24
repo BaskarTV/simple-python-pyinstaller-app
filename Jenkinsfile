@@ -17,7 +17,8 @@ pipeline {
                     junit 'test-reports/results.xml'
                 }
             }
-      stage('Deliver') {
+        }
+        stage('Deliver') {
             steps {
                 sh "pyinstaller --onefile sources/add2vals.py"
             }
@@ -27,3 +28,5 @@ pipeline {
                 }
             }
         }
+    }
+}
