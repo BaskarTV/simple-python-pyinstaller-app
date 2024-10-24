@@ -1,10 +1,10 @@
 pipeline {
-    agent any 
+    agent any
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'python3 -m py_compile sources/add2vals.py sources/calc.py' 
-                stash(name: 'compiled-results', includes: 'sources/*.py*') 
+                sh 'python3 -m py_compile sources/add2vals.py sources/calc.py'
+                stash(name: 'compiled-results', includes: 'sources/*.py*')
             }
         }
         stage('Test') {
@@ -18,9 +18,16 @@ pipeline {
                 }
             }
         }
+        stage('Install PyInstaller') {
+            steps {
+                // Install PyInstaller
+                sh 'pip install pyinstaller'
+            }
+        }
         stage('Deliver') {
             steps {
-                sh "pyinstaller --onefile sources/add2vals.py"
+                // Build the binary using PyInstaller
+                sh 'pyinstaller --onefile sources/add2vals.py'
             }
             post {
                 success {
